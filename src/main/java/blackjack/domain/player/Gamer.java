@@ -17,7 +17,13 @@ public class Gamer implements Player {
         return new Name(name);
     }
 
+    @Override
     public void receive(Card card) {
         cards.include(card);
+    }
+
+    @Override
+    public Cards getCards() {
+        return new Cards(cards);
     }
 }
