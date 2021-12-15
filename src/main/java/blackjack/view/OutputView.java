@@ -4,7 +4,9 @@ import static java.util.stream.Collectors.*;
 
 import java.util.List;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 
@@ -30,9 +32,14 @@ public class OutputView {
         System.out.printf(INIT_MESSAGE_FORMAT, names);
     }
 
-    public static void printCurrentState(Player player) {
-        System.out.printf(CURRENT_STATE_MESSAGE_FORMAT, player.getName());
-        Cards cards = player.getCards();
+    public static void printDealerCurrentState(Name dealerName, Card card) {
+        System.out.printf(CURRENT_STATE_MESSAGE_FORMAT, dealerName);
+        System.out.println(card);
+    }
+
+    public static void printGamerCurrentState(Player gamer) {
+        System.out.printf(CURRENT_STATE_MESSAGE_FORMAT, gamer.getName());
+        Cards cards = gamer.getCards();
 
         cards.getCards().forEach(System.out::println);
     }
