@@ -6,16 +6,12 @@ import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 
 public class OutputView {
-    private static final String GUIDE_MESSAGE = "블랙잭 게임을 시작합니다.";
     private static final String INIT_MESSAGE_FORMAT = "\n%s와 %s 에게 카드 2장을 나누어 줍니다.\n";
     private static final String CURRENT_STATE_MESSAGE_FORMAT = "\n%s의 카드\n";
     private static final String CURRENT_SCORE_MESSAGE_FORMAT = "현재 점수: %d\n";
+    private static final String WINNER_MESSAGE_FORMAT = "\n%s이(가) 승리했습니다.\n";
 
     private OutputView() {
-    }
-
-    public static void guide() {
-        System.out.println(GUIDE_MESSAGE);
     }
 
     public static void printInit(Name dealerName, Name playerName) {
@@ -34,5 +30,9 @@ public class OutputView {
 
         cards.getCards().forEach(System.out::println);
         System.out.printf(CURRENT_SCORE_MESSAGE_FORMAT, totalScore);
+    }
+
+    public static void printWinner(Name name) {
+        System.out.printf(WINNER_MESSAGE_FORMAT, name);
     }
 }
