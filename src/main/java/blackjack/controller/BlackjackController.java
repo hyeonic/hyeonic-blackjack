@@ -1,8 +1,7 @@
 package blackjack.controller;
 
-import java.util.List;
-
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
@@ -24,6 +23,7 @@ public class BlackjackController {
     }
 
     private void initPhase(Deck deck, Dealer dealer, Player gamer) {
+        OutputView.printInit(dealer.getName(), gamer.getName());
         for (int i = DEFAULT_INDEX; i < INIT_DRAW_COUNT; i++) {
             distribute(deck, dealer);
             distribute(deck, gamer);
@@ -38,7 +38,9 @@ public class BlackjackController {
     }
 
     private void printCurrentState(Dealer dealer, Player gamer) {
-        OutputView.printDealerCurrentState(dealer.getName(), dealer.openDefaultCard());
-        OutputView.printGamerCurrentState(gamer);
+        OutputView.printDealerCurrentState(dealer.getName(), dealer.openDefaultCard(), dealer.getDefaultScore());
+
+        Cards cards = gamer.getCards();
+        OutputView.printGamerCurrentState(gamer, cards.getTotalScore());
     }
 }
