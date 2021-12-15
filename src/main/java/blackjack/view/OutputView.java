@@ -10,6 +10,7 @@ public class OutputView {
     private static final String CURRENT_STATE_MESSAGE_FORMAT = "\n%s의 카드\n";
     private static final String CURRENT_SCORE_MESSAGE_FORMAT = "현재 점수: %d\n";
     private static final String WINNER_MESSAGE_FORMAT = "\n%s이(가) 승리했습니다.\n";
+    private static final String TIE_MESSAGE = "무승부 입니다.";
 
     private OutputView() {
     }
@@ -34,5 +35,9 @@ public class OutputView {
 
     public static void printWinner(Name name) {
         System.out.printf(WINNER_MESSAGE_FORMAT, name);
+    }
+
+    public static void printTie() {
+        System.out.println(TIE_MESSAGE);
     }
 }
