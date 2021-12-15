@@ -20,6 +20,11 @@ public class BlackjackController {
         Gamer gamer = new Gamer(InputView.name());
 
         initPhase(deck, dealer, gamer);
+
+        if (dealer.isWinner()) {
+            OutputView.printWinner(dealer.getName());
+            return;
+        }
     }
 
     private void initPhase(Deck deck, Dealer dealer, Player gamer) {
