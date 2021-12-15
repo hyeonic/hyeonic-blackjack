@@ -22,4 +22,11 @@ public class Cards {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public int getTotalScore() {
+        return cards.stream()
+            .map(Card::getNumber)
+            .mapToInt(Number::getScore)
+            .sum();
+    }
 }
