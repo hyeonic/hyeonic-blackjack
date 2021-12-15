@@ -26,4 +26,9 @@ public class Gamer implements Player {
     public Cards getCards() {
         return new Cards(cards);
     }
+
+    @Override
+    public boolean isValidScore() {
+        return cards.getTotalScore() <= WINNER_SCORE;
+    }
 }
