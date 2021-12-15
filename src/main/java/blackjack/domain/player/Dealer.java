@@ -8,7 +8,8 @@ import blackjack.domain.card.Number;
 
 public class Dealer implements Player {
     private static final String DEFAULT_NAME = "딜러";
-    public static final int DEFAULT_CARDS_INDEX = 0;
+    private static final int DEFAULT_CARDS_INDEX = 0;
+    private static final int WINNER_SCORE = 21;
 
     private final Cards cards;
 
@@ -40,5 +41,9 @@ public class Dealer implements Player {
         Card card = cards.getCards().get(DEFAULT_CARDS_INDEX);
         Number number = card.getNumber();
         return number.getScore();
+    }
+
+    public boolean isWinner() {
+        return cards.getTotalScore() == WINNER_SCORE;
     }
 }
