@@ -22,4 +22,8 @@ public enum Number {
         this.name = name;
         this.score = score;
     }
+
+    public int getScore() {
+        return score;
+    }
 }
