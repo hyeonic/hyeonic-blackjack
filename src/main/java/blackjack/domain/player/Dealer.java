@@ -9,7 +9,7 @@ import blackjack.domain.card.Number;
 public class Dealer implements Player {
     private static final String DEFAULT_NAME = "딜러";
     private static final int DEFAULT_CARDS_INDEX = 0;
-    private static final int WINNER_SCORE = 21;
+    private static final int DRAW_CONDITION = 16;
 
     private final Cards cards;
 
@@ -32,6 +32,11 @@ public class Dealer implements Player {
         return new Cards(cards);
     }
 
+    @Override
+    public boolean isValidScore() {
+        return cards.getTotalScore() <= WINNER_SCORE;
+    }
+
     public Card openDefaultCard() {
         List<Card> cards = this.cards.getCards();
         return new Card(cards.get(DEFAULT_CARDS_INDEX));
@@ -45,5 +50,9 @@ public class Dealer implements Player {
 
     public boolean isWinner() {
         return cards.getTotalScore() == WINNER_SCORE;
+    }
+
+    public boolean isDraw() {
+        return cards.getTotalScore() <= DRAW_CONDITION;
     }
 }
