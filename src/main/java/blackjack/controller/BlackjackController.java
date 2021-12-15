@@ -1,5 +1,8 @@
 package blackjack.controller;
 
+import java.util.Arrays;
+
+import blackjack.domain.Rule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
@@ -40,16 +43,53 @@ public class BlackjackController {
 
     private void playPhase(Deck deck, Dealer dealer, Player gamer) {
         playGamerTurn(deck, dealer, gamer);
+        playDealerTurn(deck, dealer, gamer);
+
+        if (checkValid(dealer, gamer)) {
+            return;
+        }
+
+        Rule rule = new Rule();
+        Player winner = rule.getWinner(Arrays.asList(dealer, gamer));
+        OutputView.printWinner(winner.getName());
+    }
+
+    private boolean checkValid(Dealer dealer, Player gamer) {
+        if (checkTie(dealer, gamer)) {
+            return true;
+        }
+
+        if (!dealer.isValidScore()) {
+            OutputView.printWinner(gamer.getName());
+            return true;
+        }
+
+        if (!gamer.isValidScore()) {
+            OutputView.printWinner(dealer.getName());
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkTie(Dealer dealer, Player gamer) {
+        if (!dealer.isValidScore() && !gamer.isValidScore()) {
+            OutputView.printTie();
+            return true;
+        }
+        return false;
     }
 
     private void playGamerTurn(Deck deck, Dealer dealer, Player gamer) {
         while (InputView.isTurn(gamer.getName())) {
             distribute(deck, gamer);
             printCurrentState(dealer, gamer);
+        }
+    }
 
-            if (!gamer.isValidScore()) {
-                break;
-            }
+    private void playDealerTurn(Deck deck, Dealer dealer, Player gamer) {
+        while (dealer.isDraw()) {
+            distribute(deck, dealer);
+            printFinalState(dealer, gamer);
         }
     }
 
@@ -63,5 +103,13 @@ public class BlackjackController {
 
         Cards cards = gamer.getCards();
         OutputView.printGamerCurrentState(gamer, cards.getTotalScore());
+    }
+
+    private void printFinalState(Dealer dealer, Player gamer) {
+        Cards dealerCards = dealer.getCards();
+        OutputView.printGamerCurrentState(dealer, dealerCards.getTotalScore());
+
+        Cards gamerCards = gamer.getCards();
+        OutputView.printGamerCurrentState(gamer, gamerCards.getTotalScore());
     }
 }
