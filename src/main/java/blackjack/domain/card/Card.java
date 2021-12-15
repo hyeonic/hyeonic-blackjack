@@ -14,6 +14,10 @@ public class Card {
         this.number = card.number;
     }
 
+    public Number getNumber() {
+        return number;
+    }
+
     @Override
     public String toString() {
         return pattern + " " + number;
