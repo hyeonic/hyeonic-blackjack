@@ -4,6 +4,7 @@ import java.util.List;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Number;
 
 public class Dealer implements Player {
     private static final String DEFAULT_NAME = "딜러";
@@ -33,5 +34,11 @@ public class Dealer implements Player {
     public Card openDefaultCard() {
         List<Card> cards = this.cards.getCards();
         return new Card(cards.get(DEFAULT_CARDS_INDEX));
+    }
+
+    public int getDefaultScore() {
+        Card card = cards.getCards().get(DEFAULT_CARDS_INDEX);
+        Number number = card.getNumber();
+        return number.getScore();
     }
 }
