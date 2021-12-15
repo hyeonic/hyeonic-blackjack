@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import blackjack.domain.card.Card;
@@ -19,30 +17,28 @@ public class BlackjackController {
     public void run() {
         OutputView.guide();
         Deck deck = new Deck();
-        List<Player> players = getPlayers();
+        Dealer dealer = new Dealer();
+        Gamer gamer = new Gamer(InputView.name());
 
-        initPhase(deck, players);
+        initPhase(deck, dealer, gamer);
     }
 
-    private List<Player> getPlayers() {
-        return new ArrayList<>(Arrays.asList(new Dealer(), new Gamer(InputView.name())));
-    }
-
-    private void initPhase(Deck deck, List<Player> players) {
-        OutputView.printInit(players);
+    private void initPhase(Deck deck, Dealer dealer, Player gamer) {
         for (int i = DEFAULT_INDEX; i < INIT_DRAW_COUNT; i++) {
-            distribute(deck, players);
+            distribute(deck, dealer);
+            distribute(deck, gamer);
         }
 
-        for (Player player : players) {
-            OutputView.printCurrentState(player);
-        }
+        printCurrentState(dealer, gamer);
     }
 
-    private void distribute(Deck deck, List<Player> players) {
-        for (Player player : players) {
-            Card card = deck.draw();
-            player.receive(card);
-        }
+    private void distribute(Deck deck, Player player) {
+        Card card = deck.draw();
+        player.receive(card);
+    }
+
+    private void printCurrentState(Dealer dealer, Player gamer) {
+        OutputView.printDealerCurrentState(dealer.getName(), dealer.openDefaultCard());
+        OutputView.printGamerCurrentState(gamer);
     }
 }
