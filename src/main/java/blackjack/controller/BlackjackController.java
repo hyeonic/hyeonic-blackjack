@@ -14,17 +14,17 @@ public class BlackjackController {
     private static final int INIT_DRAW_COUNT = 2;
 
     public void run() {
-        OutputView.guide();
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
         Gamer gamer = new Gamer(InputView.name());
 
         initPhase(deck, dealer, gamer);
-
         if (dealer.isWinner()) {
             OutputView.printWinner(dealer.getName());
             return;
         }
+
+        playPhase(deck, dealer, gamer);
     }
 
     private void initPhase(Deck deck, Dealer dealer, Player gamer) {
@@ -35,6 +35,22 @@ public class BlackjackController {
         }
 
         printCurrentState(dealer, gamer);
+    }
+
+
+    private void playPhase(Deck deck, Dealer dealer, Player gamer) {
+        playGamerTurn(deck, dealer, gamer);
+    }
+
+    private void playGamerTurn(Deck deck, Dealer dealer, Player gamer) {
+        while (InputView.isTurn(gamer.getName())) {
+            distribute(deck, gamer);
+            printCurrentState(dealer, gamer);
+
+            if (!gamer.isValidScore()) {
+                break;
+            }
+        }
     }
 
     private void distribute(Deck deck, Player player) {
